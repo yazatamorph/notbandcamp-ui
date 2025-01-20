@@ -1,1 +1,1 @@
-export { AlbumTrackPage } from "./AlbumTrackPage.tsx";
+export { AlbumPage } from "./AlbumPage/AlbumPage.tsx";

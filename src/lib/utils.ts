@@ -6,6 +6,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function getDateString(date: Date): string {
+  return date.toLocaleDateString(undefined, {
+    localeMatcher: "best fit",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export function sumPlayback(tracks: Track[]) {
   const sec = tracks.reduce((acc, { length }) => {
     const t = length.split(":");

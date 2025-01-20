@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button.tsx";
 import { LoaderCircle, Pause, Play } from "lucide-react";
 import { Slider } from "@/components/ui/slider.tsx";
 
-interface TrackControlsProps {
+interface ITrackControlsProps {
   isLoading: boolean;
   isPlaying: boolean;
 }
 
-export function TrackControls({ isLoading, isPlaying }: TrackControlsProps) {
+export function TrackControls({ isLoading, isPlaying }: ITrackControlsProps) {
   return (
     <div className="flex flex-row gap-4">
       <Button variant="secondary" disabled={isLoading}>

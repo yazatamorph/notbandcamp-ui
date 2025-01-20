@@ -1,5 +1,4 @@
-import { AspectRatio } from "@/components/ui/aspect-ratio.tsx";
-import { Player } from "@/components";
+import { AlbumInfoHeader, TrackControls, TrackList } from "./components";
 import { Album } from "@/shared.types.ts";
 
 const sample: Album = {
@@ -33,24 +32,25 @@ const sample: Album = {
     "Here's some information about the album. It was mainly recorded in Portland, OR, but vocals and finishing touches were tracked in Aldie, VA. Andy of Caïna said it was my best work to date, which was pretty nice of him. The last track is sort of a reharmonized cover of a Kesha b-side from her \"Warrior\" record; I'm not sure it's recognizable, though.",
 };
 
-export function AlbumTrackPage() {
+export function AlbumPage() {
   const album = sample;
+  // TODO: replace with real state
+  const isLoading = false;
+  const isPlaying = false;
+
   return (
     <main>
-      <div className="grid grid-cols-2 gap-10">
-        <div className="flex flex-col gap-8">
-          <Player album={album} />
-          <p className="text-md text-justify">{album.description}</p>
-        </div>
-        <div className="flex flex-col gap-8">
-          <AspectRatio ratio={1} className="bg-muted">
-            <img
-              src={album.cover}
-              alt="album artwork"
-              className="object-cover"
-            />
-          </AspectRatio>
-        </div>
+      <div className="flex flex-col gap-4">
+        <AlbumInfoHeader
+          cover={album.cover}
+          name={album.name}
+          artist={album.artist}
+          released={album.released}
+          tracks={album.tracks}
+        />
+        <TrackControls isLoading={isLoading} isPlaying={isPlaying} />
+        <TrackList tracks={album.tracks} />
+        <p className="text-md text-justify">{album.description}</p>
       </div>
     </main>
   );
