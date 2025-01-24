@@ -1,31 +1,20 @@
-import { Track } from "@/shared.types.ts";
 import { getDateString, sumPlayback } from "@/lib/utils.ts";
+import { useAlbum } from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
 
-interface IAlbumInfoHeaderProps {
-  cover: string;
-  name: string;
-  artist: string;
-  released: Date;
-  tracks: Track[];
-}
-
-export function AlbumInfoHeader({
-  cover,
-  name,
-  artist,
-  released,
-  tracks,
-}: IAlbumInfoHeaderProps) {
-  const dateString = getDateString(released);
-  const totalDuration = sumPlayback(tracks);
+export function AlbumInfoHeader() {
+  const { album } = useAlbum();
+  const dateString = album ? getDateString(album.released) : "";
+  const totalDuration = album ? sumPlayback(album.tracks) : "";
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      <img src={cover} alt="album artwork" className="grid-col" />
+      <img src={album?.cover} alt="album artwork" className="grid-col" />
       <div className="flex flex-col justify-center py-0">
-        <p className="text-4xl text-primary font-medium my-0">{name}</p>
+        <p className="text-4xl text-primary font-medium my-0">
+          {album?.name || ""}
+        </p>
         <p className="text-3xl text-muted-foreground font-medium my-0">
-          {artist}
+          {album?.artist || ""}
         </p>
         <p className="text-md text-muted-foreground font-normal my-0">
           Released {dateString}

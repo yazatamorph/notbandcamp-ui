@@ -1,26 +1,40 @@
 import { Button } from "@/components/ui/button.tsx";
 import { LoaderCircle, Pause, Play } from "lucide-react";
 import { Slider } from "@/components/ui/slider.tsx";
+import { useGlobalAudioPlayer } from "react-use-audio-player";
+import { useAlbum } from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
 
-interface ITrackControlsProps {
-  isLoading: boolean;
-  isPlaying: boolean;
-}
+export function TrackControls() {
+  const audioPlayer = useGlobalAudioPlayer();
+  const { album, currentTrackIndex } = useAlbum();
 
-export function TrackControls({ isLoading, isPlaying }: ITrackControlsProps) {
+  const handleClick = () => {
+    if (audioPlayer.playing) {
+      audioPlayer.togglePlayPause();
+    } else {
+      audioPlayer.play();
+    }
+  };
+
+  const title = album?.tracks[currentTrackIndex].name || "Loading...";
+
   return (
     <div className="flex flex-row gap-4">
-      <Button variant="secondary" disabled={isLoading}>
-        {isLoading ? (
+      <Button
+        variant="secondary"
+        disabled={!audioPlayer.isReady}
+        onClick={handleClick}
+      >
+        {!audioPlayer?.isReady ? (
           <LoaderCircle className="animate-spin" />
-        ) : isPlaying ? (
+        ) : audioPlayer?.playing ? (
           <Pause />
         ) : (
           <Play />
         )}
       </Button>
       <div className="flex-col justify-between align-top grow">
-        <div>The Machine Sleeps</div>
+        <div>{title}</div>
         <Slider />
       </div>
     </div>

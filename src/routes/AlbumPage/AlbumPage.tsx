@@ -1,5 +1,12 @@
+import { useEffect } from "react";
+import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { AlbumInfoHeader, TrackControls, TrackList } from "./components";
 import { Album } from "@/shared.types.ts";
+import {
+  AlbumProvider,
+  useAlbum,
+  useAlbumDispatch,
+} from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
 
 const sample: Album = {
   id: 100,
@@ -33,24 +40,47 @@ const sample: Album = {
 };
 
 export function AlbumPage() {
-  const album = sample;
-  // TODO: replace with real state
-  const isLoading = false;
-  const isPlaying = false;
+  return (
+    <AlbumProvider>
+      <AlbumComponent />
+    </AlbumProvider>
+  );
+}
+
+function AlbumComponent() {
+  const { album } = useAlbum();
+  const albumDispatch = useAlbumDispatch();
+  // TODO: replace with router-path-derived state
+  const audioPlayer = useGlobalAudioPlayer();
+
+  useEffect(() => {
+    setTimeout(() => {
+      albumDispatch({
+        type: "loaded_album",
+        album: sample,
+        currentTrackIndex: 0,
+      });
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    audioPlayer.load(
+      "https://rfcm.streamguys1.com/todayhits-mp3?aw_0_1st.playerid=RadioTime&aw_0_1st.skey=1737406933&aw_0_1st.bundleId=tunein.com&lat=33.6194&lon=-111.9556&listenerid=89929a65f0ac2e2c5d761dccadd4cb1a&aw_0_1st.abtest=6263%2c6271&partnerId=RadioTime&aw_0_1st.stationId=s242677&aw_0_1st.premium=false&source=TuneIn&aw_0_req.gdpr=true&us_privacy=1YNY&aw_0_1st.platform=tunein&aw_0_1st.genre_id=g61&aw_0_1st.class=music&aw_0_1st.ads_partner_alias=dsk.Web&aw_0_azn.planguage=en&aw_0_1st.is_ondemand=false&aw_0_1st.topicId=na&aw_0_1st.affiliateIds=a39100%2ca39110%2ca39905%2ca40156%2ca40075&aw_0_1st.bandId=16",
+      {
+        html5: true,
+        format: "mp3",
+        autoplay: false,
+      },
+    );
+  }, []);
 
   return (
     <main>
       <div className="flex flex-col gap-4">
-        <AlbumInfoHeader
-          cover={album.cover}
-          name={album.name}
-          artist={album.artist}
-          released={album.released}
-          tracks={album.tracks}
-        />
-        <TrackControls isLoading={isLoading} isPlaying={isPlaying} />
-        <TrackList tracks={album.tracks} />
-        <p className="text-md text-justify">{album.description}</p>
+        <AlbumInfoHeader />
+        <TrackControls />
+        <TrackList />
+        <p className="text-md text-justify">{album?.description || ""}</p>
       </div>
     </main>
   );
