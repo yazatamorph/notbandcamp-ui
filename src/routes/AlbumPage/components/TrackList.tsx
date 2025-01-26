@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import {
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import { useAlbum } from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
 
 export function TrackList() {
   const { album } = useAlbum();
+
   return (
     <div>
       <Table>
@@ -18,7 +20,17 @@ export function TrackList() {
               <TableCell>{track.name}</TableCell>
               <TableCell className="text-right">{track.length}</TableCell>
             </TableRow>
-          ))}
+          )) ||
+            [0, 1, 2, 3].map((i) => (
+              <TableRow key={i} className="">
+                <TableCell>
+                  <Skeleton className="h-3.5 w-[150px]" />
+                </TableCell>
+                <TableCell className="flex flex-row-reverse">
+                  <Skeleton className="h-3.5 w-[50px]" />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>

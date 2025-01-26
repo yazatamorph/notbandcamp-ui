@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { AlbumInfoHeader, TrackControls, TrackList } from "./components";
 import { Album } from "@/shared.types.ts";
 import {
@@ -54,6 +55,7 @@ function AlbumComponent() {
   const audioPlayer = useGlobalAudioPlayer();
 
   useEffect(() => {
+    // This timeout simulates loading album info from server (very slowly)
     setTimeout(() => {
       albumDispatch({
         type: "loaded_album",
@@ -80,8 +82,23 @@ function AlbumComponent() {
         <AlbumInfoHeader />
         <TrackControls />
         <TrackList />
-        <p className="text-md text-justify">{album?.description || ""}</p>
+        {album ? (
+          <p className="text-md text-justify">{album.description}</p>
+        ) : (
+          <DescSkeleton />
+        )}
       </div>
     </main>
+  );
+}
+
+function DescSkeleton() {
+  return (
+    <div>
+      <Skeleton className="h-4 flex-grow" />
+      <Skeleton className="h-4 flex-grow mt-3" />
+      <Skeleton className="h-4 flex-grow mt-3" />
+      <Skeleton className="h-4 w-1/2 mt-3" />
+    </div>
   );
 }
