@@ -1,13 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { getDateString, sumPlayback } from "@/lib/utils.ts";
-import { useAlbum } from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
+import { getDateString } from "@/utils";
+import { usePlayer } from "@/features/player/context/PlayerContext.tsx";
+import { sumPlayback } from "@/features/player/utils";
 
-export function AlbumInfoHeader() {
-  const { album } = useAlbum();
+export function PlayerInfoHeader() {
+  const { album } = usePlayer();
   const dateString = album ? getDateString(album.released) : "";
   const totalDuration = album ? sumPlayback(album.tracks) : "";
 
-  if (!album) return <AlbumInfoHeaderSkeleton />;
+  if (!album) return <PlayerInfoHeaderSkeleton />;
 
   return (
     <div className="grid grid-cols-3 gap-4">
@@ -28,7 +29,7 @@ export function AlbumInfoHeader() {
   );
 }
 
-function AlbumInfoHeaderSkeleton() {
+function PlayerInfoHeaderSkeleton() {
   return (
     <div className="grid grid-cols-3 gap-4">
       <Skeleton className="grid-col h-[20.4rem]" />

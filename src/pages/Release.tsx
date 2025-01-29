@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { AlbumInfoHeader, TrackControls, TrackList } from "./components";
-import { Album } from "@/shared.types.ts";
 import {
-  AlbumProvider,
-  useAlbum,
-  useAlbumDispatch,
-} from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
+  PlayerInfoHeader,
+  PlayerControls,
+  PlayerTrackList,
+  PlayerProvider,
+  usePlayer,
+  usePlayerDispatch,
+} from "@/features/player";
+import { Album } from "@/shared.types.ts";
 
 const sample: Album = {
   id: 100,
@@ -40,17 +42,17 @@ const sample: Album = {
     "Here's some information about the album. It was mainly recorded in Portland, OR, but vocals and finishing touches were tracked in Aldie, VA. Andy of Caïna said it was my best work to date, which was pretty nice of him. The last track is sort of a reharmonized cover of a Kesha b-side from her \"Warrior\" record; I'm not sure it's recognizable, though.",
 };
 
-export function AlbumPage() {
+export function Release() {
   return (
-    <AlbumProvider>
-      <AlbumComponent />
-    </AlbumProvider>
+    <PlayerProvider>
+      <ReleaseComponent />
+    </PlayerProvider>
   );
 }
 
-function AlbumComponent() {
-  const { album } = useAlbum();
-  const albumDispatch = useAlbumDispatch();
+function ReleaseComponent() {
+  const { album } = usePlayer();
+  const albumDispatch = usePlayerDispatch();
   // TODO: replace with router-path-derived state
   const audioPlayer = useGlobalAudioPlayer();
 
@@ -79,9 +81,9 @@ function AlbumComponent() {
   return (
     <main>
       <div className="flex flex-col gap-4">
-        <AlbumInfoHeader />
-        <TrackControls />
-        <TrackList />
+        <PlayerInfoHeader />
+        <PlayerControls />
+        <PlayerTrackList />
         {album ? (
           <p className="text-md text-justify">{album.description}</p>
         ) : (

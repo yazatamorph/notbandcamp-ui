@@ -11,12 +11,17 @@
     "prefix": ""
   },
   "aliases": {
+    "assets": "@/assets",
     "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
+    "context": "@/context",
+    "data": "@/data",
+    "features": "@/features",
     "hooks": "@/hooks",
-    "layouts": "@/layouts"
+    "layouts": "@/layouts",
+    "lib": "@/lib",
+    "pages": "@/pages",
+    "ui": "@/components/ui",
+    "utils": "@/lib/utils"
   },
   "iconLibrary": "lucide"
 }

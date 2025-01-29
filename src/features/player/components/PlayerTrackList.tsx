@@ -6,10 +6,10 @@ import {
   TableRow,
 } from "@/components/ui/table.tsx";
 import { Track } from "@/shared.types.ts";
-import { useAlbum } from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
+import { usePlayer } from "@/features/player/context/PlayerContext.tsx";
 
-export function TrackList() {
-  const { album } = useAlbum();
+export function PlayerTrackList() {
+  const { album } = usePlayer();
 
   return (
     <div>

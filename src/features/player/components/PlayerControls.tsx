@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button.tsx";
 import { LoaderCircle, Pause, Play } from "lucide-react";
 import { Slider } from "@/components/ui/slider.tsx";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { useAlbum } from "@/routes/AlbumPage/hooks/AlbumPageContext.tsx";
+import { usePlayer } from "@/features/player/context/PlayerContext.tsx";
 
-export function TrackControls() {
+export function PlayerControls() {
   const audioPlayer = useGlobalAudioPlayer();
-  const { album, currentTrackIndex } = useAlbum();
+  const { album, currentTrackIndex } = usePlayer();
 
   const handleClick = () => {
     if (audioPlayer.playing) {
